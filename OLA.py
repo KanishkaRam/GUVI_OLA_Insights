@@ -6,10 +6,11 @@ from streamlit_option_menu import option_menu
 
 # =======  MySQL Connection  ======
 connection = mysql.connector.connect(
-    host="localhost",
+    host="thomas.proxy.rlwy.net",
+    port=18622,
     user="root",
-    password="12345678",
-    database="OlaRideInsight"
+    password="jQvZWttzEKBCQrjIextFnAPxTCEBpFTV",
+    database="railway"
 )
 
 cursor = connection.cursor()
@@ -18,7 +19,7 @@ record_count = cursor.fetchone()[0]
 
 if record_count == 0:
     # =========== Read Excel File =========
-    path = r"C:\Users\RAaM\OneDrive\Desktop\OLA Ride\OLA_DataSet.xlsx"
+    path = r"OLA_DataSet.xlsx"
     df = pd.read_excel(path)
 
     # ======= DATA CLEANING ========
@@ -96,7 +97,7 @@ if record_count == 0:
 #======= Streamlit Page Design ==========
 
 st.title('**OLA RIDE INSIGHTS**')
-img = Image.open(r"C:\Users\RAaM\OneDrive\Desktop\OLA Ride\OLA_LOGO.png")
+img = Image.open(r"OLA_LOGO.png")
 st.image(img,  width=350 )
 
 with st.sidebar:

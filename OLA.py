@@ -149,7 +149,7 @@ if record_count < expected_rows:
 #======= Streamlit Page Design ==========
 
 st.title('**OLA RIDE INSIGHTS**')
-img = Image.open(r"C:\Users\RAaM\OneDrive\Desktop\OLA Ride\OLA_LOGO.png")
+img = Image.open("OLA_LOGO.png")
 st.image(img,  width=350 )
 
 with st.sidebar:

@@ -222,7 +222,24 @@ elif selected == "Cancelled Rides":
         WHERE Booking_Status='Canceled by Customer'
     """)
 
-    st.metric("Cancelled by Customers", f"{total:,}")
+    st.metric("Rides Cancelled by Customers", f"{total:,}")
+    page_size = 100
+    total_pages = (total + page_size - 1) // page_size
+    page = st.selectbox("Select Page", range(1, total_pages + 1))
+
+    offset = (page - 1) * page_size
+
+    query = f"""
+    SELECT Booking_ID, Customer_ID, Vehicle_Type, Pickup_Location, Drop_Location
+    FROM ola_bookings
+    WHERE Booking_Status='Canceled by Customer'
+    LIMIT {page_size} OFFSET {offset}
+    """
+
+    df = run_query(query)
+    st.write(f"Showing {offset+1} to {min(offset+page_size, total)}")
+    st.dataframe(df, use_container_width=True)
+    
 
 elif selected == "Customers With Highest Ride Cancellation":
     st.subheader("LIST THE TOP 5 CUSTOMERS WHO BOOKED THE HIGHEST NUMBER OF RIDES")
@@ -250,7 +267,24 @@ elif selected == "Rides Cancelled by Drivers":
     AND Canceled_Rides_by_Driver='Personal & Car related issue'
     """)
 
-    st.metric("Driver Cancellations", f"{total:,}")
+    st.metric("Rides Cancelled by Drivers", f"{total:,}")
+    page_size = 100
+    total_pages = (total + page_size - 1) // page_size
+    page = st.selectbox("Select Page", range(1, total_pages + 1))
+
+    offset = (page - 1) * page_size
+
+    query = f"""
+    SELECT Booking_ID, Customer_ID, Vehicle_Type, Pickup_Location, Drop_Location
+    FROM ola_bookings
+    WHERE Booking_Status='Canceled by Driver'
+    AND Canceled_Rides_by_Driver='Personal & Car related issue'
+    LIMIT {page_size} OFFSET {offset}
+    """
+
+    df = run_query(query)
+    st.write(f"Showing {offset+1} to {min(offset+page_size, total)}")
+    st.dataframe(df, use_container_width=True)
 
 elif selected == "Driver's Rating":
     st.subheader("FIND THE MAXIMUM AND MINIMUM DRIVER RATINGS FOR PRIME SEDAN BOOKINGS")
